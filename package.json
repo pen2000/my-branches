@@ -1,16 +1,16 @@
 {
   "$schema": "https://www.raycast.com/schemas/extension.json",
-  "name": "my-branches",
-  "title": "My branches",
-  "description": "search your branches",
+  "name": "branches",
+  "title": "Branches",
+  "description": "manage your branches",
   "icon": "command-icon.png",
   "author": "pen2000",
   "license": "MIT",
   "commands": [
     {
       "name": "index",
-      "title": "Show My Branch",
-      "description": "Template for showing a static list and a detail view",
+      "title": "Branches",
+      "description": "Manage Branches",
       "mode": "view",
       "preferences": [
         {
