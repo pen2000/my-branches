@@ -9,13 +9,13 @@ export default function ListActions(branchInfo: BranchInfo) {
         <Action.OpenInBrowser
           title="Open Issue"
           icon={{ source: Icon.Globe }}
-          url={`https://github.com/${branchInfo.owner}/${branchInfo.prRepository}/issue/${branchInfo.prNumber}`}
+          url={`https://github.com/${branchInfo.owner}/${branchInfo.issueRepository}/issues/${branchInfo.issueNumber}`}
           shortcut={{ modifiers: ["cmd"], key: "i" }}
         />
         <Action.OpenInBrowser
           title="Open PullRequest"
           icon={{ source: Icon.Globe }}
-          url={`https://github.com/${branchInfo.owner}/${branchInfo.issueRepository}/pull/${branchInfo.issueNumber}`}
+          url={`https://github.com/${branchInfo.owner}/${branchInfo.prRepository}/pull/${branchInfo.prNumber}`}
           shortcut={{ modifiers: ["cmd"], key: "r" }}
         />
         <Action.CopyToClipboard

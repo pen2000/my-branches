@@ -56,8 +56,8 @@ export default function Command() {
         defaultValue={issueRepository}
       />
       <Form.TextField
-        id="branchRepository"
-        title="Branch repository"
+        id="prRepository"
+        title="PullRequest repository"
         placeholder="branch_repository"
         defaultValue={prRepository}
       />
