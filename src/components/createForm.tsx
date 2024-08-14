@@ -1,15 +1,19 @@
-import { Action, ActionPanel, Form, showToast, Toast, useNavigation } from "@raycast/api";
+import { Action, ActionPanel, Form, getPreferenceValues, showToast, Toast, useNavigation } from "@raycast/api";
 import { useForm, FormValidation } from "@raycast/utils";
 import { ISSUE_STATUS } from "../costants/issueStatus";
 import fs from "fs";
-import { BranchInfo, BranchInfoFile } from "../types";
+import path from "path";
+import { Preferences, BranchInfo } from "../types";
 
-export default function EditBranchForm(props: { file: BranchInfoFile }) {
+export default function CreateForm() {
+  const preferences = getPreferenceValues<Preferences>();
+  const { directory, issueRepository, prRepository, owner } = preferences;
   const { pop } = useNavigation();
 
   const { handleSubmit, itemProps } = useForm<BranchInfo>({
     onSubmit(values) {
-      const filePath = props.file.filePath;
+      const fileName = `${values.branch}.json`;
+      const filePath = path.join(directory, fileName);
       const jsonString = JSON.stringify(values, null, 2);
       fs.writeFile(filePath, jsonString, "utf8", (err) => {
         if (err) {
@@ -22,20 +26,16 @@ export default function EditBranchForm(props: { file: BranchInfoFile }) {
           showToast({
             style: Toast.Style.Success,
             title: "Success",
-            message: "Update info",
+            message: fileName,
           });
           pop();
         }
       });
     },
     initialValues: {
-      owner: props.file.branchInfo.owner || "",
-      issueRepository: props.file.branchInfo.issueRepository || "",
-      prRepository: props.file.branchInfo.prRepository || "",
-      issueNumber: props.file.branchInfo.issueNumber || "",
-      prNumber: props.file.branchInfo.prNumber || "",
-      branch: props.file.branchInfo.branch || "",
-      description: props.file.branchInfo.description || "",
+      owner: owner || "",
+      issueRepository: issueRepository || "",
+      prRepository: prRepository || "",
     },
     validation: {
       owner: FormValidation.Required,

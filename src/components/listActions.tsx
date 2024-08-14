@@ -1,8 +1,8 @@
 import { ActionPanel, Action, Icon } from "@raycast/api";
 import { BranchInfoFile } from "../types";
-import CreateBranchAction from "./createBranchAction";
-import EditBranchAction from "./editBranchAction";
-import DeleteBranchAction from "./deleteBranchAction";
+import CreateAction from "./createAction";
+import EditAction from "./editAction";
+import DeleteAction from "./deleteAction";
 
 export default function ListActions(file: BranchInfoFile) {
   return (
@@ -27,11 +27,11 @@ export default function ListActions(file: BranchInfoFile) {
           shortcut={{ modifiers: ["cmd"], key: "c" }}
         />
         <ActionPanel.Submenu title="Edit" shortcut={{ modifiers: ["cmd"], key: "e" }}>
-          <EditBranchAction file={file} />
-          <DeleteBranchAction file={file} />
+          <EditAction file={file} />
+          <DeleteAction file={file} />
         </ActionPanel.Submenu>
       </ActionPanel.Submenu>
-      <CreateBranchAction />
+      <CreateAction />
     </ActionPanel>
   );
 }

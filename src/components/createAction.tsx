@@ -1,7 +1,7 @@
 import { Action, Icon } from "@raycast/api";
-import CreateForm from "./createBranchForm";
+import CreateForm from "./createForm";
 
-export default function CreateBranchAction() {
+export default function CreateAction() {
   return (
     <Action.Push
       icon={Icon.Plus}

@@ -1,19 +1,15 @@
-import { Action, ActionPanel, Form, getPreferenceValues, showToast, Toast, useNavigation } from "@raycast/api";
+import { Action, ActionPanel, Form, showToast, Toast, useNavigation } from "@raycast/api";
 import { useForm, FormValidation } from "@raycast/utils";
 import { ISSUE_STATUS } from "../costants/issueStatus";
 import fs from "fs";
-import path from "path";
-import { Preferences, BranchInfo } from "../types";
+import { BranchInfo, BranchInfoFile } from "../types";
 
-export default function Command() {
-  const preferences = getPreferenceValues<Preferences>();
-  const { directory, issueRepository, prRepository, owner } = preferences;
+export default function EditForm(props: { file: BranchInfoFile }) {
   const { pop } = useNavigation();
 
   const { handleSubmit, itemProps } = useForm<BranchInfo>({
     onSubmit(values) {
-      const fileName = `${values.branch}.json`;
-      const filePath = path.join(directory, fileName);
+      const filePath = props.file.filePath;
       const jsonString = JSON.stringify(values, null, 2);
       fs.writeFile(filePath, jsonString, "utf8", (err) => {
         if (err) {
@@ -26,16 +22,20 @@ export default function Command() {
           showToast({
             style: Toast.Style.Success,
             title: "Success",
-            message: fileName,
+            message: "Update info",
           });
           pop();
         }
       });
     },
     initialValues: {
-      owner: owner || "",
-      issueRepository: issueRepository || "",
-      prRepository: prRepository || "",
+      owner: props.file.branchInfo.owner || "",
+      issueRepository: props.file.branchInfo.issueRepository || "",
+      prRepository: props.file.branchInfo.prRepository || "",
+      issueNumber: props.file.branchInfo.issueNumber || "",
+      prNumber: props.file.branchInfo.prNumber || "",
+      branch: props.file.branchInfo.branch || "",
+      description: props.file.branchInfo.description || "",
     },
     validation: {
       owner: FormValidation.Required,

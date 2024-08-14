@@ -1,5 +1,5 @@
 import { ActionPanel, List, Icon } from "@raycast/api";
-import CreateBranchAction from "./createBranchAction";
+import CreateAction from "./createAction";
 
 export default function EmptyView() {
   return (
@@ -8,7 +8,7 @@ export default function EmptyView() {
       title="Not found"
       actions={
         <ActionPanel>
-          <CreateBranchAction />
+          <CreateAction />
         </ActionPanel>
       }
     />
