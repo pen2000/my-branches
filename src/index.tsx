@@ -3,15 +3,15 @@ import EmptyView from "./components/emptyView";
 import fs from "fs";
 import path from "path";
 import { useEffect, useState } from "react";
-import { Preferences, BranchInfo, Filter } from "./types";
+import { Preferences, BranchInfo, Filter, BranchInfoFile } from "./types";
 import ListItem from "./components/listItem";
 
 type State = {
   filter: Filter;
   isLoading: boolean;
   searchText: string;
-  branches: BranchInfo[];
-  visibleBranches: BranchInfo[];
+  branches: BranchInfoFile[];
+  visibleBranches: BranchInfoFile[];
 };
 
 export default function Command() {
@@ -48,7 +48,10 @@ export default function Command() {
         .map((file) => {
           const filePath = path.join(directory, file);
           const fileContent = fs.readFileSync(filePath, "utf-8");
-          return JSON.parse(fileContent) as BranchInfo;
+          return {
+            filePath: filePath,
+            branchInfo: JSON.parse(fileContent) as BranchInfo,
+          };
         });
     } catch (err) {
       console.error("Failed to parse JSON", err);
@@ -57,13 +60,13 @@ export default function Command() {
   };
 
   const filterFiles = () => {
-    let matchedFiles: BranchInfo[] = [];
+    let matchedFiles: BranchInfoFile[] = [];
     if (state.filter === Filter.All) {
-      matchedFiles = convertFiles().filter((file) => filterBySearchText(file));
+      matchedFiles = convertFiles().filter((file) => filterBySearchText(file.branchInfo));
     } else {
       matchedFiles = convertFiles()
-        .filter((file) => file.status === state.filter)
-        .filter((file) => filterBySearchText(file));
+        .filter((file) => file.branchInfo.status === state.filter)
+        .filter((file) => filterBySearchText(file.branchInfo));
     }
     console.log(matchedFiles);
 
@@ -91,13 +94,7 @@ export default function Command() {
         setState((previous) => ({ ...previous, searchText: newValue }));
       }}
     >
-      {filterFiles().length === 0 ? (
-        <EmptyView />
-      ) : (
-        filterFiles().map((file) => (
-          ListItem(file)
-        ))
-      )}
+      {filterFiles().length === 0 ? <EmptyView /> : filterFiles().map((file) => ListItem(file))}
     </List>
   );
 }

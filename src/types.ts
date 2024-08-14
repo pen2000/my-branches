@@ -16,11 +16,16 @@ interface BranchInfo {
   status: string;
 }
 
+interface BranchInfoFile {
+  filePath: string;
+  branchInfo: BranchInfo;
+}
+
 enum Filter {
   All = "all",
   Working = "working",
-  Closed = "closed"
+  Closed = "closed",
 }
 
 export { Filter };
-export type { Preferences, BranchInfo };
+export type { Preferences, BranchInfo, BranchInfoFile };
