@@ -4,7 +4,7 @@ import CreateAction from "./createAction";
 import EditAction from "./editAction";
 import DeleteAction from "./deleteAction";
 
-export default function ListActions(file: BranchInfoFile) {
+export default function ListActions(file: BranchInfoFile, onReload: () => void) {
   return (
     <ActionPanel>
       <ActionPanel.Submenu title="Action">
@@ -27,11 +27,11 @@ export default function ListActions(file: BranchInfoFile) {
           shortcut={{ modifiers: ["cmd"], key: "c" }}
         />
         <ActionPanel.Submenu title="Edit" shortcut={{ modifiers: ["cmd"], key: "e" }}>
-          <EditAction file={file} />
-          <DeleteAction file={file} />
+          <EditAction file={file} onReload={onReload} />
+          <DeleteAction file={file} onReload={onReload} />
         </ActionPanel.Submenu>
       </ActionPanel.Submenu>
-      <CreateAction />
+      <CreateAction onReload={onReload} />
     </ActionPanel>
   );
 }

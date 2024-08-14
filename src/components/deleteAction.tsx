@@ -1,10 +1,8 @@
-import { Action, Icon, showToast, Toast, useNavigation } from "@raycast/api";
+import { Action, Icon, showToast, Toast } from "@raycast/api";
 import { BranchInfoFile } from "../types";
 import fs from "fs";
 
-export default function DeleteAction(props: { file: BranchInfoFile }) {
-  const { pop } = useNavigation();
-
+export default function DeleteAction(props: { file: BranchInfoFile; onReload: () => void }) {
   const deleteAction = (filePath: string) => {
     fs.unlink(filePath, (err) => {
       if (err) {
@@ -19,7 +17,7 @@ export default function DeleteAction(props: { file: BranchInfoFile }) {
           title: "Success",
           message: "Delete file",
         });
-        pop();
+        props.onReload();
       }
     });
   };

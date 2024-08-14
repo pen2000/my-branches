@@ -4,7 +4,7 @@ import { ISSUE_STATUS } from "../costants/issueStatus";
 import fs from "fs";
 import { BranchInfo, BranchInfoFile } from "../types";
 
-export default function EditForm(props: { file: BranchInfoFile }) {
+export default function EditForm(props: { file: BranchInfoFile; onReload: () => void }) {
   const { pop } = useNavigation();
 
   const { handleSubmit, itemProps } = useForm<BranchInfo>({
@@ -24,6 +24,7 @@ export default function EditForm(props: { file: BranchInfoFile }) {
             title: "Success",
             message: "Update info",
           });
+          props.onReload();
           pop();
         }
       });

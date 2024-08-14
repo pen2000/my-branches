@@ -10,8 +10,9 @@ type State = {
   filter: Filter;
   isLoading: boolean;
   searchText: string;
-  branches: BranchInfoFile[];
-  visibleBranches: BranchInfoFile[];
+  files: BranchInfoFile[];
+  visibleFiles: BranchInfoFile[];
+  reload: boolean;
 };
 
 export default function Command() {
@@ -22,14 +23,20 @@ export default function Command() {
     filter: Filter.Working,
     isLoading: true,
     searchText: "",
-    branches: [],
-    visibleBranches: [],
+    files: [],
+    visibleFiles: [],
+    reload: false,
   });
 
   useEffect(() => {
-    const branches = filterFiles();
-    setState((previous) => ({ ...previous, branches: branches, visibleBranches: branches, isLoading: false }));
+    const files = convertFiles();
+    setState((previous) => ({ ...previous, files: files, visibleFiles: files, isLoading: false }));
   }, []);
+
+  useEffect(() => {
+    const files = convertFiles();
+    setState((previous) => ({ ...previous, files: files, visibleFiles: files, reload: false }));
+  }, [state.reload]);
 
   // searchTextが空の場合は全てを表示
   const filterBySearchText = (branchInfo: BranchInfo) => {
@@ -60,18 +67,17 @@ export default function Command() {
   };
 
   const filterFiles = () => {
-    let matchedFiles: BranchInfoFile[] = [];
     if (state.filter === Filter.All) {
-      matchedFiles = convertFiles().filter((file) => filterBySearchText(file.branchInfo));
+      return state.files.filter((file) => filterBySearchText(file.branchInfo));
     } else {
-      matchedFiles = convertFiles()
+      return state.files
         .filter((file) => file.branchInfo.status === state.filter)
         .filter((file) => filterBySearchText(file.branchInfo));
     }
-    console.log(matchedFiles);
+  };
 
-    // setState((previous) => ({ ...previous, branches: matchedFiles }));
-    return matchedFiles;
+  const handleReload = () => {
+    setState((previous) => ({ ...previous, reload: true }));
   };
 
   return (
@@ -94,7 +100,11 @@ export default function Command() {
         setState((previous) => ({ ...previous, searchText: newValue }));
       }}
     >
-      {filterFiles().length === 0 ? <EmptyView /> : filterFiles().map((file) => ListItem(file))}
+      {filterFiles().length === 0 ? (
+        <EmptyView onReload={handleReload} />
+      ) : (
+        filterFiles().map((file) => ListItem(file, handleReload))
+      )}
     </List>
   );
 }

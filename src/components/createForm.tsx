@@ -5,7 +5,7 @@ import fs from "fs";
 import path from "path";
 import { Preferences, BranchInfo } from "../types";
 
-export default function CreateForm() {
+export default function CreateForm(props: { onReload: () => void }) {
   const preferences = getPreferenceValues<Preferences>();
   const { directory, issueRepository, prRepository, owner } = preferences;
   const { pop } = useNavigation();
@@ -28,6 +28,7 @@ export default function CreateForm() {
             title: "Success",
             message: fileName,
           });
+          props.onReload();
           pop();
         }
       });

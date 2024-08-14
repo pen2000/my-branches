@@ -1,13 +1,13 @@
 import { Action, Icon } from "@raycast/api";
 import CreateForm from "./createForm";
 
-export default function CreateAction() {
+export default function CreateAction(props: { onReload: () => void }) {
   return (
     <Action.Push
       icon={Icon.Plus}
       title="Add Branch"
       shortcut={{ modifiers: ["cmd"], key: "n" }}
-      target={<CreateForm />}
+      target={<CreateForm onReload={props.onReload} />}
     />
   );
 }
