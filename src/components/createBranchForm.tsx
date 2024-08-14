@@ -32,7 +32,15 @@ export default function Command() {
         }
       });
     },
+    initialValues: {
+      owner: owner || "",
+      issueRepository: issueRepository || "",
+      prRepository: prRepository || "",
+    },
     validation: {
+      owner: FormValidation.Required,
+      issueRepository: FormValidation.Required,
+      prRepository: FormValidation.Required,
       issueNumber: FormValidation.Required,
       prNumber: FormValidation.Required,
       branch: FormValidation.Required,
@@ -48,19 +56,9 @@ export default function Command() {
         </ActionPanel>
       }
     >
-      <Form.TextField id="owner" title="Owner" placeholder="owner_name" defaultValue={owner} />
-      <Form.TextField
-        id="issueRepository"
-        title="Issue repository"
-        placeholder="issue_repository"
-        defaultValue={issueRepository}
-      />
-      <Form.TextField
-        id="prRepository"
-        title="PullRequest repository"
-        placeholder="branch_repository"
-        defaultValue={prRepository}
-      />
+      <Form.TextField title="Owner" placeholder="owner_name" {...itemProps.owner} />
+      <Form.TextField title="Issue repository" placeholder="issue_repository" {...itemProps.issueRepository} />
+      <Form.TextField title="PullRequest repository" placeholder="branch_repository" {...itemProps.prRepository} />
       <Form.TextField title="Issue number" placeholder="1234" autoFocus={true} {...itemProps.issueNumber} />
       <Form.TextField title="PullRequest number" placeholder="5678" {...itemProps.prNumber} />
       <Form.TextField title="Branch" placeholder="my_branch_1234" {...itemProps.branch} />
