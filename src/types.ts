@@ -17,6 +17,7 @@ interface BranchInfo {
 }
 
 interface BranchInfoFile {
+  fileName: string;
   filePath: string;
   branchInfo: BranchInfo;
 }

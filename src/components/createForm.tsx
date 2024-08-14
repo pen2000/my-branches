@@ -19,13 +19,13 @@ export default function CreateForm(props: { onReload: () => void }) {
         if (err) {
           showToast({
             style: Toast.Style.Failure,
-            title: "Failure",
+            title: "An error occurred",
             message: err.message,
           });
         } else {
           showToast({
             style: Toast.Style.Success,
-            title: "Success",
+            title: "Successfully created",
             message: fileName,
           });
           props.onReload();

@@ -15,14 +15,14 @@ export default function EditForm(props: { file: BranchInfoFile; onReload: () => 
         if (err) {
           showToast({
             style: Toast.Style.Failure,
-            title: "Failure",
+            title: "An error occurred",
             message: err.message,
           });
         } else {
           showToast({
             style: Toast.Style.Success,
-            title: "Success",
-            message: "Update info",
+            title: "Successfully updated",
+            message: props.file.fileName,
           });
           props.onReload();
           pop();

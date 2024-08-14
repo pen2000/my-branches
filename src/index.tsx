@@ -29,13 +29,12 @@ export default function Command() {
   });
 
   useEffect(() => {
-    const files = convertFiles();
-    setState((previous) => ({ ...previous, files: files, visibleFiles: files, isLoading: false }));
+    setState((previous) => ({ ...previous, reload: true }));
   }, []);
 
   useEffect(() => {
     const files = convertFiles();
-    setState((previous) => ({ ...previous, files: files, visibleFiles: files, reload: false }));
+    setState((previous) => ({ ...previous, files: files, visibleFiles: files, reload: false, isLoading: false }));
   }, [state.reload]);
 
   // searchTextが空の場合は全てを表示
@@ -56,6 +55,7 @@ export default function Command() {
           const filePath = path.join(directory, file);
           const fileContent = fs.readFileSync(filePath, "utf-8");
           return {
+            fileName: file,
             filePath: filePath,
             branchInfo: JSON.parse(fileContent) as BranchInfo,
           };
