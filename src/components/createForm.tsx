@@ -41,9 +41,7 @@ export default function CreateForm(props: { onReload: () => void }) {
     validation: {
       owner: FormValidation.Required,
       issueRepository: FormValidation.Required,
-      prRepository: FormValidation.Required,
       issueNumber: FormValidation.Required,
-      prNumber: FormValidation.Required,
       branch: FormValidation.Required,
       description: FormValidation.Required,
     },

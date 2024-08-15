@@ -37,5 +37,12 @@ export default function DeleteAction(props: { file: BranchInfoFile; onReload: ()
     await confirmAlert(options);
   };
 
-  return <Action title="Delete" icon={{ source: Icon.Trash }} onAction={() => deleteAction()} />;
+  return (
+    <Action
+      title="Delete"
+      icon={{ source: Icon.Trash }}
+      onAction={() => deleteAction()}
+      shortcut={{ modifiers: ["cmd"], key: "x" }}
+    />
+  );
 }

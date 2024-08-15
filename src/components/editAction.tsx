@@ -6,7 +6,7 @@ export default function EditAction(props: { file: BranchInfoFile; onReload: () =
   return (
     <Action.Push
       icon={{ source: Icon.Pencil }}
-      title="Edit Branch"
+      title="Edit"
       shortcut={{ modifiers: ["cmd"], key: "e" }}
       target={<EditForm file={props.file} onReload={props.onReload} />}
     />

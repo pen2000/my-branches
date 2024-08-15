@@ -82,6 +82,7 @@ export default function Command() {
 
   return (
     <List
+      navigationTitle="Branches"
       isLoading={state.isLoading}
       searchText={state.searchText}
       searchBarAccessory={
