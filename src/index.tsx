@@ -20,7 +20,7 @@ export default function Command() {
   const { directory } = preferences;
 
   const [state, setState] = useState<State>({
-    filter: Filter.Working,
+    filter: Filter.All,
     isLoading: true,
     searchText: "",
     files: [],
@@ -28,10 +28,12 @@ export default function Command() {
     reload: false,
   });
 
+  // 初回時の描画
   useEffect(() => {
     setState((previous) => ({ ...previous, reload: true }));
   }, []);
 
+  // reload指定時の描画
   useEffect(() => {
     const files = convertFiles();
     setState((previous) => ({ ...previous, files: files, visibleFiles: files, reload: false, isLoading: false }));
@@ -46,6 +48,7 @@ export default function Command() {
     }
   };
 
+  // ファイルをオブジェクトに変換s
   const convertFiles = () => {
     try {
       const files = fs.readdirSync(directory);
@@ -104,7 +107,18 @@ export default function Command() {
       {filterFiles().length === 0 ? (
         <EmptyView onReload={handleReload} />
       ) : (
-        filterFiles().map((file) => ListItem(file, handleReload))
+        <>
+          <List.Section title="Working">
+            {filterFiles()
+              .filter((file) => file.branchInfo.status === Filter.Working)
+              .map((file) => ListItem(file, handleReload))}
+          </List.Section>
+          <List.Section title="Closed">
+            {filterFiles()
+              .filter((file) => file.branchInfo.status === Filter.Closed)
+              .map((file) => ListItem(file, handleReload))}
+          </List.Section>
+        </>
       )}
     </List>
   );
