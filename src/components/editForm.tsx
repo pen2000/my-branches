@@ -58,11 +58,11 @@ export default function EditForm(props: { file: BranchInfoFile; onReload: () => 
       <Form.TextField title="Owner" placeholder="owner_name" {...itemProps.owner} />
       <Form.TextField title="Issue repository" placeholder="issue_repository" {...itemProps.issueRepository} />
       <Form.TextField title="PullRequest repository" placeholder="branch_repository" {...itemProps.prRepository} />
-      <Form.TextField title="Issue number" placeholder="1234" autoFocus={true} {...itemProps.issueNumber} />
+      <Form.TextField title="Issue number" placeholder="1234" {...itemProps.issueNumber} />
       <Form.TextField title="PullRequest number" placeholder="5678" {...itemProps.prNumber} />
       <Form.TextField title="Branch" placeholder="my_branch_1234" {...itemProps.branch} />
       <Form.TextField title="Description" placeholder="〇〇機能開発" {...itemProps.description} />
-      <Form.Dropdown id="status" title="Status" defaultValue={ISSUE_STATUS.WORKING.value}>
+      <Form.Dropdown id="status" title="Status" defaultValue={ISSUE_STATUS.WORKING.value} autoFocus={true}>
         {Object.values(ISSUE_STATUS).map((status) => (
           <Form.Dropdown.Item value={status.value} title={status.label} key={status.value} />
         ))}
