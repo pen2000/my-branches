@@ -7,7 +7,7 @@ import DeleteAction from "./deleteAction";
 export default function ListActions(file: BranchInfoFile, onReload: () => void) {
   return (
     <ActionPanel>
-      <ActionPanel.Submenu title="Action">
+      <ActionPanel.Submenu title="Menu" icon={Icon.CircleEllipsis}>
         <Action.OpenInBrowser
           title="Open Issue"
           icon={{ source: Icon.Globe }}
@@ -22,15 +22,14 @@ export default function ListActions(file: BranchInfoFile, onReload: () => void) 
             shortcut={{ modifiers: ["cmd"], key: "r" }}
           />
         )}
-        <Action.CopyToClipboard
-          title="Copy Branch Name"
-          icon={{ source: Icon.CopyClipboard }}
-          content={file.branchInfo.branch}
-          shortcut={{ modifiers: ["cmd"], key: "c" }}
-        />
         <EditAction file={file} onReload={onReload} />
         <DeleteAction file={file} onReload={onReload} />
       </ActionPanel.Submenu>
+      <Action.CopyToClipboard
+        title="Copy Branch Name"
+        icon={{ source: Icon.CopyClipboard }}
+        content={file.branchInfo.branch}
+      />
       <CreateAction onReload={onReload} />
     </ActionPanel>
   );
