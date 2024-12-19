@@ -48,7 +48,7 @@ export default function Command() {
     }
   };
 
-  // ファイルをオブジェクトに変換s
+  // ファイルをオブジェクトに変換する
   const convertFiles = () => {
     try {
       const files = fs.readdirSync(directory);
